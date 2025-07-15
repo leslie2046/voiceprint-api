@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
         # 启动服务
         uvicorn.run(
-            "app.main:app",
+            "app.application:app",
             host=settings.host,
             port=settings.port,
             reload=True,  # 开发环境开启热重载
