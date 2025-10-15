@@ -2,11 +2,17 @@
 FROM python:3.10-slim AS builder
 
 # 安装系统依赖，包括编译工具
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    make \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get install -y \
+#    gcc \
+#    g++ \
+#    make \
+#    && rm -rf /var/lib/apt/lists/*
+RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian trixie main contrib non-free" > /etc/apt/sources.list \
+    && echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian trixie-updates main contrib non-free" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security trixie-security main contrib non-free" >> /etc/apt/sources.list \
+    && apt-get update && apt-get install -y gcc g++ make && rm -rf /var/lib/apt/lists/*
+
+
 
 # 设置工作目录
 WORKDIR /app
@@ -15,6 +21,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # 安装Python依赖
+RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 第二阶段：运行阶段

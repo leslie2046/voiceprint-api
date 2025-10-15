@@ -88,6 +88,11 @@ class Settings:
         return self.voiceprint.get("similarity_threshold", 0.2)
 
     @property
+    def model_id(self)-> str:
+        """模型ID"""
+        return self.voiceprint.get("model_id","iic/speech_campplus_sv_zh-cn_3dspeaker_16k")
+
+    @property
     def target_sample_rate(self) -> int:
         """目标音频采样率"""
         return self.voiceprint.get("target_sample_rate", 16000)

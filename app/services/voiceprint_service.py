@@ -19,6 +19,7 @@ class VoiceprintService:
     def __init__(self):
         self._pipeline = None
         self.similarity_threshold = settings.similarity_threshold
+        self.model_id = settings.model_id
         self._pipeline_lock = threading.Lock()  # 添加线程锁
         self._init_pipeline()
         self._warmup_model()  # 添加模型预热
@@ -37,10 +38,10 @@ class VoiceprintService:
                 device = "cpu"
                 logger.info("使用CPU设备")
 
-            logger.info("开始加载模型: iic/speech_campplus_sv_zh-cn_3dspeaker_16k")
+            logger.info(f"开始加载模型: {self.model_id}")
             self._pipeline = pipeline(
                 task=Tasks.speaker_verification,
-                model="iic/speech_campplus_sv_zh-cn_3dspeaker_16k",
+                model=self.model_id,
                 device=device,
             )
 
