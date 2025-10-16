@@ -1,0 +1,27 @@
+services:
+  mysql:
+    image: mysql:8.0.39
+    container_name: voiceprint-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: voiceprint_db
+      MYSQL_PORT: 3306
+      MYSQL_MAX_PACKET: 1073741824
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - voiceprint
+networks:
+  voiceprint:
+    driver: bridge

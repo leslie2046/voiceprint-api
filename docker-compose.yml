@@ -4,7 +4,7 @@ version: '3'
 services:
   # MCP 接入点服务
   voiceprint-api:
-    image: ghcr.nju.edu.cn/xinnan-tech/voiceprint-api:latest
+    image: leslie2046/voiceprint:v0.0.5
     container_name: voiceprint-api
     restart: always
     networks:
